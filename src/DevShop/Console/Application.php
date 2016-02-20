@@ -97,6 +97,7 @@ class Application extends BaseApplication
     $commands[] = new Command\Upgrade();
     $commands[] = new Command\RemoteInstall();
     $commands[] = new Command\SelfUpdate();
+    $commands[] = new Command\DevelopmentLaunch();
 
     return $commands;
   }
