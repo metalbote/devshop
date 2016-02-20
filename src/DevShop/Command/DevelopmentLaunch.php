@@ -65,6 +65,7 @@ class DevelopmentLaunch extends Command
     // Check for 'docker' command and ability to run.
     try {
       $process = $this->getProcess('bash docker-development-environment.sh', __DIR__ . '/../../../');
+      $process->setTimeout(NULL);
       $process->mustRun(function ($type, $buffer) {
         if (Process::ERR === $type) {
           echo $buffer;
