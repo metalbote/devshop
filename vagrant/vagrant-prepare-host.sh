@@ -8,28 +8,29 @@
 
 # Passed argument is Vagrant Home folder.
 VAGRANT_HOME=$1
+DEVSHOP_HOME="$VAGRANT_HOME/../"
 DEVMASTER_VERSION=$2
-cd $1
-cd ..
+AEGIR_HOME="$DEVSHOP_HOME/aegir-home"
 
-if [ ! -d aegir-home ]; then
+DEVMASTER_ROOT="$DEVSHOP_HOME/aegir-home/devmaster-$DEVMASTER_VERSION"
+
+if [ ! -d "$DEVSHOP_HOME/aegir-home" ]; then
   echo "Æ | Creating aegir-home directory..."
-  mkdir aegir-home
+  mkdir "$DEVSHOP_HOME/aegir-home"
 fi
 
-cd aegir-home
-
 # Build a full devshop frontend on the host with drush make, with working-copy option.
-if [ ! -d devmaster-$DEVMASTER_VERSION ]; then
-   drush make $VAGRANT_HOME/build-devmaster.make devmaster-$DEVMASTER_VERSION --working-copy --no-gitinfofile
-   cp devmaster-$DEVMASTER_VERSION/sites/default/default.settings.php devmaster-$DEVMASTER_VERSION/sites/default/settings.php
-   mkdir devmaster-$DEVMASTER_VERSION/sites/devshop.site
-   chmod 777 devmaster-$DEVMASTER_VERSION/sites -R
+if [ ! -d $DEVMASTER_ROOT ]; then
+   drush make $DEVSHOP_HOME/build-devmaster.make $DEVMASTER_ROOT --working-copy --no-gitinfofile
+   cp $DEVMASTER_ROOT/sites/default/default.settings.php $DEVMASTER_ROOT/sites/default/settings.php
+   mkdir $DEVMASTER_ROOT/sites/local.devshop.site
+   chmod 777 $DEVMASTER_ROOT/sites -R
 fi
 
 # Clone drush packages.
-if [ ! -d .drush ]; then
+if [ ! -d $AEGIR_HOME/.drush ]; then
     echo "Æ | Creating .drush/commands folder..."
+    cd $AEGIR_HOME
     mkdir -p .drush/commands
     cd .drush/commands
     echo "Æ | Cloning Provision..."
@@ -40,14 +41,16 @@ if [ ! -d .drush ]; then
     cd ..
     echo "Æ | Cloning Registry Rebuild..."
     git clone git@git.drupal.org:project/registry_rebuild.git --branch 7.x-2.x
-    cd ../..
+
+    cd $AEGIR_HOME
+    chmod 777 .drush -R
 fi
 
 # Clone ansible roles.
-cd $VAGRANT_HOME
+cd $DEVSHOP_HOME
 if [ ! -d roles ]; then
     mkdir roles
-    ansible-galaxy install -r ../roles.yml -p roles
+    ansible-galaxy install -r roles.yml -p roles
     cd roles
 
     # Overwrite the roles installed by galaxy with git clones of Our Roles
