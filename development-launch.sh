@@ -19,7 +19,7 @@ echo " Waiting 5 seconds..."
 sleep 5
 
 docker-compose up -d
-docker-compose logs -ft
+docker-compose logs -f
 
 echo "==========================ÆGIR=========================="
 echo "------------------------ DEVSHOP------------------------"
@@ -41,13 +41,13 @@ echo " sites/devshop.local.computer folder:   "
 echo "    rm -rf aegir-home/devmaster-1.x/sites/devshop.local.computer"
 echo "                                                 "
 echo " To 'log in' to the container, run 'bash' with docker-compose exec.: "
-echo "    docker-compose exec hostmaster bash            "
+echo "    docker-compose exec devmaster bash            "
 echo "                                                   "
 echo " Then, you can run drush directly.                 "
 echo "    drush @hostmaster uli                          "
 echo "                                                   "
 echo " To run drush from the host using docker:          "
-echo "    docker-compose exec hostmaster drush @hostmaster uli  "
+echo "    docker-compose exec devmaster drush @hostmaster uli  "
 echo "                                                   "
 #echo "-----------------------------------------------------"
 #echo " Testing                                           "
