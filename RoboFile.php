@@ -238,6 +238,13 @@ class RoboFile extends \Robo\Tasks
   }
   
   /**
+   * Remove devshop containers using docker-compose rm -fv
+   */
+  public function rm() {
+    $this->_exec('docker-compose kill; docker-compose rm -fv');
+  }
+  
+  /**
    * Destroy all containers, docker volumes, and aegir configuration.
    */
   public function destroy($opts = ['force' => 0]) {
