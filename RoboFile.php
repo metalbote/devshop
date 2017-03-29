@@ -214,10 +214,10 @@ class RoboFile extends \Robo\Tasks
     }
     
     if ($opts['test']) {
-      $cmd = "docker-compose run devmaster 'run-tests.sh' --file={$opts['file']}";
+      $cmd = "docker-compose --file={$opts['file']} run devmaster 'run-tests.sh'";
     }
     else {
-      $cmd = "docker-compose up -d --file={$opts['file']}";
+      $cmd = "docker-compose --file={$opts['file']} up -d";
       if ($opts['follow']) {
         $cmd .= "; docker-compose logs -f";
       }
