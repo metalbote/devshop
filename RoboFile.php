@@ -198,7 +198,7 @@ class RoboFile extends \Robo\Tasks
    *
    * Use "--test" option to run tests instead of the hosting queue.
    */
-  public function up($opts = ['follow' => 1, 'test' => false]) {
+  public function up($opts = ['follow' => 1, 'test' => false, 'file' => 'docker-compose.yml']) {
     
     if (!file_exists('aegir-home')) {
       if ($opts['no-interaction'] || $this->ask('aegir-home does not yet exist. Run "prepare:sourcecode" command?')) {
@@ -214,10 +214,10 @@ class RoboFile extends \Robo\Tasks
     }
     
     if ($opts['test']) {
-      $cmd = "docker-compose run devmaster 'run-tests.sh'";
+      $cmd = "docker-compose run devmaster 'run-tests.sh' --file={$opts['file']}";
     }
     else {
-      $cmd = "docker-compose up -d";
+      $cmd = "docker-compose up -d --file={$opts['file']}";
       if ($opts['follow']) {
         $cmd .= "; docker-compose logs -f";
       }
