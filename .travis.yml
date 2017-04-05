@@ -8,6 +8,12 @@ branches:
     - 1.x
 #
 env:
+  matrix:
+  - test="Install"
+    compose_file="docker-compose.yml"
+
+  - test="Upgrade"
+    compose_file="docker-compose-upgrade.yml"
 #  matrix:
 #  - test="Upgrade"
 #    distribution="ubuntu"
@@ -75,7 +81,7 @@ before_install:
 script:
 
   # Launch devshop including preparing the source code.
-  - robo up --test -n
+  - robo up --test -n --file=${compose_file}
 
 #
 #  # Pull container
