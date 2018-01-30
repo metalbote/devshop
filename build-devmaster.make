@@ -12,4 +12,7 @@ projects[drupal][version] = 7.56
 
 ; RELEASE
 ; Leave in place for replacement by release process.
-projects[devmaster][version] = 1.x
+projects[devmaster][version] = makefiles
+projects[devmaster][download][type] = git
+projects[devmaster][download][branch] = makefiles
+projects[devmaster][download][url] = http://github.com/opendevshop/devmaster.git
