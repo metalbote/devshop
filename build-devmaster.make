@@ -14,6 +14,9 @@ projects[drupal][version] = 7.59
 ; Leave in place for replacement by release process.
 projects[devmaster][version] = 1.x-dev
 
+; @TODO: Move to drupal-org-contrib.make once ready to merge.
+projects[hosting_docker][download][type] = "git"
+
 ; CAS
 libraries[cas][download][type] = "git"
 libraries[cas][download][url] = "https://github.com/apereo/phpCAS"

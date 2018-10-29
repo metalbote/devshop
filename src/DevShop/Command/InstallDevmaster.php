@@ -169,8 +169,15 @@ class InstallDevmaster extends Command
       // http_service_type
       ->addOption(
         'http_service_type', NULL, InputOption::VALUE_OPTIONAL,
-        'The HTTP service to use: apache or nginx',
+        'The HTTP service to use: apache, nginx, or apache_docker',
         'apache'
+      )
+
+      // db_service_type
+      ->addOption(
+        'db_service_type', NULL, InputOption::VALUE_OPTIONAL,
+        'The DB service to use: mysql or mysql_docker',
+        'mysql'
       )
 
       // http_port
@@ -486,7 +493,7 @@ class InstallDevmaster extends Command
       $this->saveContext($db_server, array(
         'remote_host' => $this->input->getOption('aegir_db_host'),
         'context_type' => 'server',
-        'db_service_type' => 'mysql',
+        'db_service_type' =>  $this->input->getOption('db_service_type'),
         'master_db' => $master_db,
         'db_port' => $this->input->getOption('aegir_db_port'),
       ));
@@ -499,7 +506,7 @@ class InstallDevmaster extends Command
 
       // Save
       $db_server = 'server_master';
-      $server_master_db_service_type = 'mysql';
+      $server_master_db_service_type = $this->input->getOption('db_service_type');
       $server_master_master_db = $master_db;
     }
 

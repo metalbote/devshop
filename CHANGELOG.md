@@ -555,7 +555,7 @@ These new features are not enabled by default, yet.  To check them out, please e
 - Fixed the problem of GitHub Pull Request Environments often causing the "Clone" task to fail, which would prevent the environment from being created. In addition, "Deploy" task would not run on Cloned sites.  Now, new PR environments are exact clones of live, on the same git ref. After that, a new "Deploy" task is created that runs all appropriate deploy hooks.
 - Clones of locked environments are automatically unlocked, since they are assumed to be destructible. Be sure to check your environment settings if you need to lock environments.
 - Removing our special devshop_tests drupal page, and altering the menu to allow access to test tasks to users with the permission "access test logs". Now github links to the correct place to view tests in action!
-- Fixed the funky "Logs" page for environments, and removed devshop_logs.module altogether!
+- Fixed the funky "Logs" page for environments, and removed p_logs.module altogether!
 - Added a [Tour](http://docs.devshop.support/en/latest/#tour) section to the documentation with screenshots.
 
 
@@ -690,7 +690,7 @@ Fixed a bug in the Install command when specifying a version.
 - Added composer.json to devmaster and devshop_provision.
 - Swapped drush_shell_exec's for Symfony Process in devshop_provision.
 - Swapped provision-git-deploy for Symfony GitWrapper in devshop_provision and devshop_projects.drush.inc.  
-- Added a new drush log type: devshop_command + devshop_log + devshop_ok + devshop_error.  These will output logs in a new prettier format in the front-end.  Documentation coming soon.
+- Added a new drush log type: devshop_command + p_log + devshop_ok + devshop_error.  These will output logs in a new prettier format in the front-end.  Documentation coming soon.
 - Finally fully moving devshop_provision to [github](https://github.com/opendevshop/devshop_provision), Created proper tags and branches and cleaned up old ones.
 - Adding a shared function for adding the deploy hooks checkboxes to all forms that need it:  devshop_environment_deploy_hooks_form()
 - Cleaned out a lot of old code and comments.
