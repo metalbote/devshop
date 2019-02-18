@@ -3,8 +3,8 @@
 #  DevShop Standalone Install Script
 #  =================================
 #
-#  This script will install a full devshop server from scratch. 
-#  
+#  This script will install a full devshop server from scratch.
+#
 #  Please read the full "Installing DevShop" instructions at https://docs.opendevshop.com/install.html
 #
 #  Before you start, please visit https://github.com/opendevshop/devshop/releases to be sure you have the latest version of this script,
@@ -25,7 +25,7 @@
 #  ==================
 #
 #   Must run as root or with sudo and -H option:
-#  
+#
 #    root@ubunu:~# wget https://raw.githubusercontent.com/opendevshop/devshop/1.x/install.sh
 #    root@ubunu:~# bash install.sh --hostname=devshop.mydomain.com
 #
@@ -224,29 +224,10 @@ if [ ! `command -v ansible` ]; then
     elif [ $OS == 'centos' ] || [ $OS == 'rhel' ] || [ $OS == 'redhat' ] || [ $OS == 'fedora'  ]; then
 
         # Build ansible from source to ensure the latest version.
-        yum install -y git epel-release redhat-lsb-core > /dev/null 1>&1
-        git clone http://github.com/ansible/ansible.git --recursive --branch stable-2.3
-
-        # dir may not exist, or it may exist as a symlink.  lets handle this a little better.
-        if ! [ -d "ansible" ]; then
-          echo "The directory ansible does not exist which means git clone failed.  This could be a permission or link issue.  Check the referenced directory."
-          exit 1
-        else
-
-          # Build ansible RPM from source code.
-          yum install -y which rpm-build make asciidoc git python-setuptools python2-devel PyYAML python-httplib2 python-jinja2 python-keyczar python-paramiko python-six sshpass
-          cd ansible
-          git checkout v2.3.0.0-1
-          make rpm > /dev/null 2>&1
-          rpm -Uvh ./rpm-build/ansible-*.noarch.rpm
-
-          ansible --version
-        fi
-
-        if [ ! `ansible --version` ]; then
-          echo >&2 "We require ansible but it's not installed.  The installation has failed.  Aborting.";
-          exit 1
-        fi
+        yum install -y epel-release redhat-lsb-core > /dev/null 1>&1
+        yum update -y
+        yum upgrade -y
+        yum install -y ansible
 
     else
         echo "OS ($OS) is not known, or an install action was not understood.  Please post an issue with this message at http://github.com/opendevshop/devshop/issues/new"
@@ -271,7 +252,7 @@ if [ $OS == 'ubuntu' ] || [ $OS == 'debian' ]; then
   if [ $VERSION == '14.04' ]; then
       ANSIBLE_GALAXY_OPTIONS="$ANSIBLE_GALAXY_OPTIONS --ignore-certs"
   fi
-        
+
 elif [ $OS == 'centos' ] || [ $OS == 'redhat' ] || [ $OS == 'fedora'  ]; then
     yum install epel-release -y
     yum install git -y
